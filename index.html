@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Link</title>
+    <style>
+        /* Sets the background image and centers everything */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            
+            /* ========================================== */
+            /* PUT YOUR BACKGROUND IMAGE LINK/FILE BELOW  */
+            /* ========================================== */
+            background-image: url('gri.jpg'); 
+            
+            background-size: cover; /* Ensures the image covers the whole screen */
+            background-position: center; /* Keeps the image centered */
+            background-repeat: no-repeat;
+            background-color: black; /* Fallback color just in case the image doesn't load */
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        /* Styles the waving button with a pink gradient */
+        .wave-button {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            padding: 20px 50px;
+            font-size: 28px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+            animation: wave-animation 2.5s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .wave-button:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 0 40px rgba(255, 105, 180, 1);
+            animation-play-state: paused;
+        }
+
+        @keyframes wave-animation {
+            0%   { transform: rotate(0deg); }
+            10%  { transform: rotate(15deg) translateY(-5px); }
+            20%  { transform: rotate(-10deg) translateY(0px); }
+            30%  { transform: rotate(10deg) translateY(-5px); }
+            40%  { transform: rotate(-5deg) translateY(0px); }
+            50%  { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Styles for the password section */
+        #password-section {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s ease;
+            
+            /* Added a slight dark transparent box behind the password so it's readable over any picture */
+            background: rgba(0, 0, 0, 0.6); 
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input[type="password"] {
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: 2px solid #FF69B4; 
+            background-color: rgba(0, 0, 0, 0.5); /* slightly dark inside the text box */
+            color: white;
+            outline: none;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input[type="password"]:focus {
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+
+        .submit-btn {
+            background: #FF69B4;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #FF1493; 
+            box-shadow: 0 0 15px #FF1493;
+        }
+
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            display: none; 
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- PUT YOUR BACKGROUND MUSIC LINK/FILE BELOW  -->
+    <!-- ========================================== -->
+    <audio id="bg-music" loop>
+        <source src="congga.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Initial Waving Button -->
+    <button id="main-button" class="wave-button" onclick="showPasswordPrompt()">Click</button>
+
+    <!-- Password Input Section -->
+    <div id="password-section">
+        <input type="password" id="password-input" placeholder="Enter Password">
+        <button class="submit-btn" onclick="checkPassword()">Unlock</button>
+        <p id="error-msg">Incorrect password. Try again.</p>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function showPasswordPrompt() {
+            // Starts the background music when the user clicks the first button!
+            var music = document.getElementById('bg-music');
+            music.play().catch(function(error) {
+                console.log("Music play blocked by browser:", error);
+            });
+
+            // Hide the button, show the password box
+            document.getElementById('main-button').style.display = 'none';
+            document.getElementById('password-section').style.display = 'flex';
+            document.getElementById('password-input').focus(); 
+        }
+
+        function checkPassword() {
+            var enteredPassword = document.getElementById('password-input').value;
+            var errorMessage = document.getElementById('error-msg');
+            
+            if (enteredPassword === "plsmaster") {
+                window.open("https://drive.google.com/drive/folders/1L_U80qLPsow-1jr0I6EGfQJi_k0Yvzzf", "_blank");
+                document.getElementById('password-input').value = "";
+                errorMessage.style.display = "none";
+            } else {
+                errorMessage.style.display = "block";
+                document.getElementById('password-input').value = ""; 
+            }
+        }
+
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
